@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+$("#submit").submit(function() {
+  var str = $(this).serialize();
+  $.ajax({
+    type: "POST",
+    url: "http://127.0.0.1:5000/shortner/shorten",
+    dataType: 'json',
+    data: str,
+    success: function(data){
+      var json_x = data;
+      alert(json_x.firstName2);
+      $('#result').html(json_x.url);
+    }
+  });
+
+  return false;
+  event.preventDefault();
+}); //
+</script>
+
+</head>
+<script>
+
+</script>
+<h2>URL SHORTENER</h2>
+<a href="http://127.0.0.1:5000/shortner/shorten" class="button">Fetch all shortened urls</a>
+<form method="post" action="http://localhost:5000/shortner/shorten" enctype="multipart/form-data">
+  <input type="text" name="url">
+  <button type="submit">Upload</button>
+</form>
+    <form method="post">
+      <input name="url"><br>
+      <input name="submit" type="submit" value="Submit">
+    </form>
+    <h3>CSV_UPLOAD</h3>
+     <form action="http://127.0.0.1:5000/shortner/shortencsv" method="post" enctype="multipart/form-data">
+                    <input type="file" name="data_file" />
+                    <input type="submit" />
+     </form>
+<!--<span name="result">-->
+
+<!--</span>-->
+</body>
+</html>

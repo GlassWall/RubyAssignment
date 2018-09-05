@@ -1,0 +1,5 @@
+[
+  "test.py::test_shorten_url",
+  "test.py::test_fetch_list",
+  "test.py::test_fetch_original"
+]
