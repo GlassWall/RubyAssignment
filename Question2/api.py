@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask.json import jsonify
 from werkzeug.utils import redirect
 from flask import make_response
-from service import shorten_url, fetch_original, fetch_list, delete_url
+from service import shorten_url, fetch_original, fetch_list, delete_url, shorten_csv
 import io
 import csv
 
@@ -19,25 +19,39 @@ def shorten_url_():
     return jsonify({'status': 'success', 'short_url': short_url}), 201
 
 @bp.route('/shortencsv', methods=['POST'])
-def shorten_csv():
+def shorten_csv_():
     f = request.files['data_file']
     if not f:
         return "No file"
 
     stream = io.StringIO(f.stream.read().decode("UTF8"), newline=None)
     csv_input = csv.reader(stream)
+
     # print("file contents: ", file_contents)
     # print(type(file_contents))
-    print(csv_input)
-    for row in csv_input:
-        print(row)
+  #  print(csv_input)
+    dict = {}
 
+    your_list = csv_input
+
+    short_url = []
+    print(your_list)
+    print("#####")
+    for i in your_list:
+        print("~~~~~~")
+        short_url.append(shorten_csv(i))
+        print(i)
+        print("!!!!!")
+        print(short_url)
+    print("****")
+    print(type(short_url[0]))
     stream.seek(0)
     result = transform(stream.read())
 
     response = make_response(result)
     response.headers["Content-Disposition"] = "attachment; filename=result.csv"
-    return response
+
+    return jsonify(short_url[0]), 201
    # return jsonify({'status': file.read()}), 201
 
 @bp.route('/shorten', methods=['GET'])

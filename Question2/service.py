@@ -5,6 +5,13 @@ from extensions import db
 from models import URL
 
 
+def shorten_csv(csv_response):
+    dict = {}
+    for url in csv_response:
+        dict[url] = shorten_url(url)
+    return dict
+
+
 def shorten_url(url: str):
     if not (url.startswith('https://') or url.startswith('http://')):
         url = 'http://' + url
